@@ -22,6 +22,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 CRF_MODEL_PATH = '/root/workspace/Bert-BiLSTM-CRF-pytorch/checkpoints/finetuning/100.pt'
 BERT_PATH = '/root/workspace/qa_project/chinese_L-12_H-768_A-12'
+#BERT_PATH = 'dbmdz/bert-base-turkish-cased'
 
 class CRF(object):
     def __init__(self, crf_model, bert_model, device='cpu'):
@@ -87,12 +88,12 @@ class CRF(object):
 crf = CRF(CRF_MODEL_PATH, BERT_PATH, 'cuda')
 
 def get_crf_ners(text):
-    # text = '罗红霉素和头孢能一起吃吗'
+    # text = 'Yemekler güzeldi ama servis yavaştı'
     pred_tags, tokens = crf.predict(text)
     entities = crf.parse(tokens, pred_tags)
     return entities
 
 
 if __name__ == "__main__":
-    text = '罗红霉素和头孢能一起吃吗'
+    text = 'Yemekler güzeldi ama servis yavaştı'
     print(get_crf_ners(text))
